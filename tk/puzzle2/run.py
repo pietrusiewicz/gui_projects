@@ -12,9 +12,10 @@ class Puzzle(Tk):
 
     def randomize_puzzles(self):  # {{{
         w,h = list(map(int, self.dimensions))
-        l = [[Button(self, text=f"{x},{y}") for x in range(w)] for y in range(h)]
+        self.correct_puzzles = [[Button(self, text=f"{x},{y}") for x in range(w)] for y in range(h)]
+        print(self.correct_puzzles)
         self.puzzles = []
-        for line in l:
+        for line in self.correct_puzzles:
             self.puzzles += line
         shuffle(self.puzzles)
         self.puzzles = [self.puzzles[y*w:(y+1)*w] for y in range(h)]
