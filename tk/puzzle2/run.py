@@ -2,7 +2,7 @@ from tkinter import Tk, Button
 from random import shuffle
 
 class Puzzle(Tk):
-    def __init__(self, img='', dimensions='10x10'):
+    def __init__(self, img='', dimensions='2x2'):
         Tk.__init__(self)
         self.dimensions = dimensions.split('x')
         self.randomize_puzzles()
@@ -21,26 +21,27 @@ class Puzzle(Tk):
         self.puzzles = [self.puzzles[y*w:(y+1)*w] for y in range(h)]
         # }}}
 
-    def show_puzzles(self):
+    def show_puzzles(self): # {{{
         w,h = list(map(int, self.dimensions))
         #for y in range(h):
-        for a, obj in enumerate(self.puzzles):
-            for b in range(w):
+        for y, objs in enumerate(self.puzzles):
+            for x, btn in enumerate(objs):
                 #b1 = Button(self, text=f"{self.puzzles[y][x]}", command=lambda x=x,y=y: self.swap_puzzles((x,y)))
-                btn = obj[b]
-                btn["command"] = lambda a=a,b=b: self.swap_puzzles((b,a))
-                btn.grid(column=b, row=a)
+                btn["command"] = lambda x=x,y=y: self.swap_puzzles([x,y])
+                btn.config(bg="#d9d9d9", activebackground="#ececec")
+                btn.grid(column=x, row=y) # }}}
 
     def swap_puzzles(self, xy):
         x,y = xy
         if self.moves % 2==0:
             x1,y1 = self.selected
             self.puzzles[y1][x1], self.puzzles[y][x]= self.puzzles[y][x], self.puzzles[y1][x1]
-            print(self.puzzles)
-            for i,j in [[x,y], [x1,y1]]:
-                self.puzzles[j][i].grid(column=i, row=j)
             self.selected = []
+            self.show_puzzles()
+            if self.puzzles == self.correct_puzzles:
+                print("brawo wygrałes")
         else:
+            self.puzzles[y][x].config(bg="yellow", activebackground="orange")
             self.selected = [x,y]
         self.moves += 1
         #self.show_puzzles()
