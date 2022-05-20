@@ -1,4 +1,4 @@
-from tkinter import Tk, Button
+from tkinter import Tk, Button,Label
 from random import shuffle
 
 class Puzzle(Tk):
@@ -22,13 +22,10 @@ class Puzzle(Tk):
         # }}}
 
     def show_puzzles(self): # {{{
-        w,h = list(map(int, self.dimensions))
-        #for y in range(h):
         for y, objs in enumerate(self.puzzles):
             for x, btn in enumerate(objs):
-                #b1 = Button(self, text=f"{self.puzzles[y][x]}", command=lambda x=x,y=y: self.swap_puzzles((x,y)))
                 btn["command"] = lambda x=x,y=y: self.swap_puzzles([x,y])
-                btn.config(bg="#d9d9d9", activebackground="#ececec")
+                btn.config({"bg":"#d9d9d9", "activebackground":"#ececec"})
                 btn.grid(column=x, row=y) # }}}
 
     def swap_puzzles(self, xy):
@@ -39,13 +36,22 @@ class Puzzle(Tk):
             self.selected = []
             self.show_puzzles()
             if self.puzzles == self.correct_puzzles:
-                print("brawo wygrałes")
+                self.win_screen()
         else:
             self.puzzles[y][x].config(bg="yellow", activebackground="orange")
             self.selected = [x,y]
         self.moves += 1
-        #self.show_puzzles()
 
+    def win_screen(self):
+        s = self.size()
+        [[btn.config(state="disabled") for btn in objs] for objs in self.puzzles]
+        l = Label(self, text="koniec gry")
+        l.grid(row=0, rowspan=s[0], columnspan=s[1])
+        b = Button(self, text="play again")
+        b["command"] = lambda: [b.grid_forget(), l.forget(),self.randomize_puzzles(), self.show_puzzles()]
+        b.grid(rowspan=s[1], columnspan=s[0])
+    
+        
 if __name__ == '__main__':
     p = Puzzle()
     p.mainloop()
