@@ -1,54 +1,37 @@
-from tkinter import Entry, Tk, Button, Label
-from database import Database
+from tkinter import Tk, Label, Button, Entry
 
-class App(Tk):
+class Todolist(Tk):
     def __init__(self):
         Tk.__init__(self)
-        self.d = Database()
-        self.get_tasks()#self.d.get_tasks()
-        print(self.tasks)
-        self.display_tasks()
+        self.items = {'kowno':1, 'mixtape':0}
+        self.display_items()
 
-    def get_tasks(self):
-        self.tasks = self.d.get_tasks()
-        self.tasks= {} if self.tasks==None else self.tasks
+    def display_items(self):
+        for widget in self.winfo_children():
+            widget.destroy()
+        for y, item in enumerate(self.items.keys()):
+            Label(self).grid(row=y, column=0)
+            b1 = Button(self, text=item, bg="red", bd=4, width=50)
+            b1["command"] = lambda item=item: self.change_item(item)
+            b1.grid(row=y, column=0)
+            b2 = Button(self, text='-')
+            b2["command"] = lambda item=item: self.delete_item(item)
+            if self.items[item]:
+                b1['bg']="green"
+            b2.grid(row=y, column=1)
+        e = Entry()
+        e.grid(row=len(self.items), column=0)
+        b = Button(self, text="+", command=lambda: self.change_item(e.get()))
+        b.grid(row=len(self.items), column=1)
 
-    def display_tasks(self):
-        [el.destroy() for el in self.grid_slaves()]
-        for i, task in enumerate(self.tasks):
-            e = Entry(self)
-            e.grid(row=i, column=1)
-            e.insert(0, task)
-            e['state']='disabled'
-            e['disabledforeground']="#224"
+    def change_item(self, it):
+        self.items[it] = False if it not in self.items else not self.items[it]
+        self.display_items()
 
-            c1 = Button(self, text=self.tasks[task], command=lambda t=task: self.adpm(3,t))
-            c1.grid(row=i, column=2)
-            c2 = Button(self, text="-1", command=lambda t=task: self.adpm(4,t))
-            c2.grid(row=i, column=3)
+    def delete_item(self, it):
+        del self.items[it]
+        self.display_items()
 
-            b1 = Button(self, text="-", command=lambda t=task: self.adpm(2,t))
-            b1.grid(row=i, column=0)
-
-        e = Entry(self)
-        rowe = self.size()[1]
-        e.grid(row=rowe, column=1)
-        b2 = Button(self, text="+", command=lambda: self.adpm(1,e.get()))
-        b2.grid(row=rowe, column=0)
-
-    # add, del, plus, minus
-    def adpm(self, c, task):
-        if c == 1:
-            self.d.add_task(task)
-        if c == 2:
-            self.d.del_task(task)
-        if c == 3:
-            self.d.plus_one(task)
-        if c == 4:
-            self.d.minus_one(task)
-        self.tasks = self.d.get_tasks()
-        self.display_tasks()
-
-if '__main__' == __name__:
-    a = App()
-    a.mainloop()
+if __name__ == '__main__':
+    t = Todolist()
+    t.mainloop()
