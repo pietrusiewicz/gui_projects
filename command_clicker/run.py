@@ -25,19 +25,22 @@ class Program(Tk):
     def work(self):
         time.sleep(0.6)
         # when difference is equal or less zero
-        if diff <= 0:
+        if self.diff() <= 0:
             # execution of commsnd
             system(self.command)
-
-            exit()
+            self.end_sequence()
         self.display_button()
 
     def click(self):
-        self.dest_time += 1
+        self.dest_time += 4
 
     # time to execute command
     def diff(self):
         return int(self.dest_time-time.time())
+
+    def end_sequence(self):
+        self.destroy()
+        exit()
 if __name__ == '__main__':
     p = Program()
     p.mainloop()
