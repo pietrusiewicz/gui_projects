@@ -21,13 +21,18 @@ class Todolist(Tk):
             b2.grid(row=y, column=1)
         e = Entry()
         e.grid(row=len(self.items), column=0)
-        b = Button(self, text="+", command=lambda: self.change_item(e.get()))
+        b = Button(self, text="+", command=lambda: self.add_item(e.get()))
         b.grid(row=len(self.items), column=1)
 
     def change_item(self, it):
         self.items[it] = False if it not in self.items else not self.items[it]
         self.display_items()
 
+    def add_item(self, it):
+        if it not in self.items:
+            self.items[it] = False
+        self.display_items()
+    
     def delete_item(self, it):
         del self.items[it]
         self.display_items()
