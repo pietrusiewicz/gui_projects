@@ -22,7 +22,8 @@ class Puzzle(Tk):
         w,h = self.dimensions
 
         # create 2D array where [row[column]]
-        self.correct_puzzles = [[(x,y) for x in range(w)] for y in range(h)]
+        #self.correct_puzzles = [[(x,y) for x in range(w)] for y in range(h)]
+        self.correct_puzzles = [[Button(self, text=f"{x},{y}") for x in range(w)] for y in range(h)]
 
         # convert puzzles to 1D array
         self.puzzles = []
@@ -45,13 +46,8 @@ class Puzzle(Tk):
         for y in range(h):
             # for loop [row[COLUMN]]
             for x in range(w):
-                # variables for random coords in 2D array
-                # to select these puzzles
-                tx, ty = self.puzzles[y][x]
-
-                # declare single puzzle
-                # as Button() object to edit
-                b = Button(self, text=f"{tx},{ty}")
+                # get single puzzle from self.puzzles
+                b = self.puzzles[y][x]
                 b.grid(row=y, column=x)
 
                 # when image is entered
