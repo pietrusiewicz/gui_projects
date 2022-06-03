@@ -24,10 +24,10 @@ class Sudoku(Tk):
             time.sleep(1)
             for y in range(9):
                 for x in range(9):
-                    try:
+                    # if self.squares[y][x] is object Text
+                    if type(self.squares[y][x]) == Text:
                         print(self.squares[y][x].get('1.0','end')[:1])
-                    except AttributeError:
-                        pass
+
 if __name__ == '__main__':
     s = Sudoku()
     s.mainloop()
