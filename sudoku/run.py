@@ -1,6 +1,7 @@
 from tkinter import Tk, Button, Text
 from threading import Thread
 import time
+from collections import Counter
 
 class Sudoku(Tk):
     def __init__(self):
@@ -26,16 +27,28 @@ class Sudoku(Tk):
             for y in range(9):
                 for x in range(9):
                     obj = self.squares[y][x]
-                    # if self.squares[y][x] is object Text
-                    if type(obj) == Text:
+                    # check correctness of tag square
+                    if type(obj) == Text: # {{{
                         t = obj.get('1.0','end').strip()
                         if len(t) > 1:
-                            if t[:1] not in nums:
-                                obj.delete('1.0', 'end')
-                            else:
-                                obj.delete('1.0', 'end')
-                                obj.insert('1.0', t[:1])
+                            obj.delete('1.0', 'end')
+                            if t[:1] in nums:
+                                obj.insert('1.0', t[:1]) #}}}
+            self.check_correct_cols()
 
+    def check_correct_cols(self):
+        #c = Counter()
+        for i in range(9):
+            c = Counter()
+            #l = []
+            for j in range(9):
+                t = self.squares[j][i]
+                if type(t) == Text:
+                    t = t.get('1.0','end')[:1]
+                    c[t] += 1
+            if len(list(c)) == 9:
+                print(f"kolumna {i} ulozona")
+        
 
 if __name__ == '__main__':
     s = Sudoku()
