@@ -20,13 +20,22 @@ class Sudoku(Tk):
         self.squares[y][x].grid(row=y, column=x)
 
     def work(self):
+        nums = list(map( lambda x: str(x), list(range(10)) ))
         while True:
             time.sleep(1)
             for y in range(9):
                 for x in range(9):
+                    obj = self.squares[y][x]
                     # if self.squares[y][x] is object Text
-                    if type(self.squares[y][x]) == Text:
-                        print(self.squares[y][x].get('1.0','end')[:1])
+                    if type(obj) == Text:
+                        t = obj.get('1.0','end').strip()
+                        if len(t) > 1:
+                            if t[:1] not in nums:
+                                obj.delete('1.0', 'end')
+                            else:
+                                obj.delete('1.0', 'end')
+                                obj.insert('1.0', t[:1])
+
 
 if __name__ == '__main__':
     s = Sudoku()
