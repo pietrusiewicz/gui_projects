@@ -79,25 +79,18 @@ class Sudoku(Tk):
     def check_correct_groups(self):
         g = [[],[],[], [],[],[], [],[],[]]
 
-        for elem in self.squares[:3]: # {{{
-            g[0] += elem[:3]
         for elem in self.squares[:3]:
-            g[1] += elem[3:6]
-        for elem in self.squares[:3]:
-            g[2] += elem[6:9]
+            for i in range(3):
+                g[i] += elem[i*3:(i+1)*3]
+
         for elem in self.squares[3:6]:
-            g[3] += elem[:3]
-        for elem in self.squares[3:6]:
-            g[4] += elem[3:6]
-        for elem in self.squares[3:6]:
-            g[5] += elem[6:9]
-        for elem in self.squares[6:9]:
-            g[6] += elem[:3]
-        for elem in self.squares[6:9]:
-            g[7] += elem[3:6]
-        for elem in self.squares[6:9]:
-            g[8] += elem[6:9] # }}}
+            for i in range(3):
+                g[i+3] += elem[i*3:(i+1)*3]
         
+        for elem in self.squares[6:9]:
+            for i in range(3):
+                g[i+6] += elem[i*3:(i+1)*3]
+
         for i in range(9):
             c = Counter()
 
