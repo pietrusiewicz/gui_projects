@@ -37,6 +37,7 @@ class Sudoku(Tk):
                                 obj.insert('1.0', t[:1]) #}}}
             self.check_correct_cols()
             self.check_correct_rows()
+            self.check_correct_groups()
 
     def check_correct_rows(self): # {{{
         #c = Counter()
@@ -54,27 +55,62 @@ class Sudoku(Tk):
                     c[t] += 1
                 #if len(c) == 9:
                 #print(list(c))
-                print(list(c))
+                #print(list(c))
                 #print(self.nums)
                 if sorted(list(c)) == self.nums:
-                    print(f"kolumna {i} ulozona") # }}}
+                    print(f"row {i} ulozona") # }}}
 
     def check_correct_cols(self): # {{{
         #c = Counter()
         for i in range(9):
             c = Counter()
-            #l = []
-            for j in range(9):
-                t = self.squares[j][i]
-                if type(t) != Text:
-                    break
-                #if type(t) == Text:
-                t = t.get('1.0','end')[:1]
-                c[t] += 1
-            if sorted(list(c)) == self.nums:
-            #if len(list(c)) == 9:
-                print(f"kolumna {i} ulozona") # }}}
+            if len(self.squares[i]) == 9:
+                for j in range(9):
+                    t = self.squares[j][i]
+                    if type(t) != Text:
+                        break
+                    #if type(t) == Text:
+                    t = t.get('1.0','end')[:1]
+                    c[t] += 1
+                if sorted(list(c)) == self.nums:
+                #if len(list(c)) == 9:
+                    print(f"column {i} ulozona") # }}}
         
+    def check_correct_groups(self):
+        g = [[],[],[], [],[],[], [],[],[]]
+
+        for elem in self.squares[:3]: # {{{
+            g[0] += elem[:3]
+        for elem in self.squares[:3]:
+            g[1] += elem[3:6]
+        for elem in self.squares[:3]:
+            g[2] += elem[6:9]
+        for elem in self.squares[3:6]:
+            g[3] += elem[:3]
+        for elem in self.squares[3:6]:
+            g[4] += elem[3:6]
+        for elem in self.squares[3:6]:
+            g[5] += elem[6:9]
+        for elem in self.squares[6:9]:
+            g[6] += elem[:3]
+        for elem in self.squares[6:9]:
+            g[7] += elem[3:6]
+        for elem in self.squares[6:9]:
+            g[8] += elem[6:9] # }}}
+        
+        for i in range(9):
+            c = Counter()
+
+            if len(self.squares[i]) == 9:
+                for j in range(9):
+                    t = g[i][j]
+                    if type(t) != Text:
+                        break
+                    t = t.get('1.0','end')[:1]
+                    c[t] += 1
+                if sorted(list(c)) == self.nums:
+                    print("brawo kurwa")
+
 
 if __name__ == '__main__':
     s = Sudoku()
