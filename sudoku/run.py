@@ -19,16 +19,24 @@ class Sudoku(Tk):
 
     def click(self, x,y):
         self.squares[y][x] = Text(self, width=2, height=1,bd=4)
+        #self.squares[y][x]["bg"]="black"
+        """
+        if (x+y) % 2 == 0:
+            self.squares[y][x]["bg"] = "black"
+            self.squares[y][x]["fg"] = "white"
+        """
         self.squares[y][x].grid(row=y, column=x)
 
     def work(self):
         #nums = list(map( lambda x: str(x), list(range(10)) ))
         while True:
+            self.check_correct_groups()
             time.sleep(1)
             for y in range(9):
                 for x in range(9):
                     obj = self.squares[y][x]
                     # check correctness of tag square
+
                     if type(obj) == Text: # {{{
                         t = obj.get('1.0','end').strip()
                         if len(t) > 0:
@@ -37,7 +45,7 @@ class Sudoku(Tk):
                                 obj.insert('1.0', t[:1]) #}}}
             self.check_correct_cols()
             self.check_correct_rows()
-            self.check_correct_groups()
+            #self.check_correct_groups()
 
     def check_correct_rows(self): # {{{
         #c = Counter()
@@ -90,6 +98,11 @@ class Sudoku(Tk):
         for elem in self.squares[6:9]:
             for i in range(3):
                 g[i+6] += elem[i*3:(i+1)*3]
+
+        for i in range(len(g)):
+            if i%2:
+                for item in g[i]:
+                    item["bg"]="black"
 
         for i in range(9):
             c = Counter()
