@@ -30,7 +30,7 @@ class Sudoku(Tk):
     def work(self):
         #nums = list(map( lambda x: str(x), list(range(10)) ))
         while True:
-            self.check_correct_groups()
+            to_win = self.check_correct_groups()
             time.sleep(1)
             for y in range(9):
                 for x in range(9):
@@ -43,8 +43,9 @@ class Sudoku(Tk):
                             obj.delete('1.0', 'end')
                             if t[:1] in self.nums:
                                 obj.insert('1.0', t[:1]) #}}}
-            self.check_correct_cols()
-            self.check_correct_rows()
+            if to_win and self.check_correct_cols():
+                if self.check_correct_rows():
+                    print("brawo kurwa")
             #self.check_correct_groups()
 
     def check_correct_rows(self): # {{{
@@ -65,8 +66,9 @@ class Sudoku(Tk):
                 #print(list(c))
                 #print(list(c))
                 #print(self.nums)
-                if sorted(list(c)) == self.nums:
-                    print(f"row {i} ulozona") # }}}
+                if sorted(list(c)) != self.nums:
+                    return False
+        return True # }}}
 
     def check_correct_cols(self): # {{{
         #c = Counter()
@@ -80,9 +82,9 @@ class Sudoku(Tk):
                     #if type(t) == Text:
                     t = t.get('1.0','end')[:1]
                     c[t] += 1
-                if sorted(list(c)) == self.nums:
-                #if len(list(c)) == 9:
-                    print(f"column {i} ulozona") # }}}
+                if sorted(list(c)) != self.nums:
+                    return False
+        return True # }}}
         
     def check_correct_groups(self):
         g = [[],[],[], [],[],[], [],[],[]]
@@ -103,6 +105,7 @@ class Sudoku(Tk):
             if i%2:
                 for item in g[i]:
                     item["bg"]="black"
+                    item["fg"]="white"
 
         for i in range(9):
             c = Counter()
@@ -114,8 +117,13 @@ class Sudoku(Tk):
                         break
                     t = t.get('1.0','end')[:1]
                     c[t] += 1
-                if sorted(list(c)) == self.nums:
-                    print("brawo kurwa")
+
+                if sorted(list(c)) != self.nums:
+                    return False
+            
+        return True
+                #if sorted(list(c)) == self.nums:
+                    #return True
 
 
 if __name__ == '__main__':
