@@ -37,15 +37,20 @@ class Sudoku(Tk):
                     obj = self.squares[y][x]
                     # check correctness of tag square
 
-                    if type(obj) == Text: # {{{
-                        t = obj.get('1.0','end').strip()
-                        if len(t) > 0:
-                            obj.delete('1.0', 'end')
-                            if t[:1] in self.nums:
-                                obj.insert('1.0', t[:1]) #}}}
+                    if type(obj) == Button:
+                        continue
+
+                    # correcting Text value
+                    t = obj.get('1.0','end').strip() #{{{
+                    if len(t) > 0:
+                        obj.delete('1.0', 'end')
+                        if t[:1] in self.nums:
+                            obj.insert('1.0', t[:1])  #}}}
+
             if to_win and self.check_correct_cols():
                 if self.check_correct_rows():
                     print("brawo kurwa")
+                    self.end_scene()
             #self.check_correct_groups()
 
     def check_correct_rows(self): # {{{
@@ -85,7 +90,28 @@ class Sudoku(Tk):
                 if sorted(list(c)) != self.nums:
                     return False
         return True # }}}
-        
+
+    """ 
+    def check_correct_cols_n_rows(self): # {{{
+        #c = Counter()
+        for k in range(2):
+            c = Counter()
+            for i in range(9):
+                if len(self.squares[i]) == 9:
+                    for j in range(9):
+                        #for t in [self.squares[j][i], self.squares[i][j]]:
+                        t = self.squares[j][i] if k==0 else self.squares[i][j]
+                        #t = self.squares[j][i]
+                        if type(t) != Text:
+                            break
+                        #if type(t) == Text:
+                        t = t.get('1.0','end')[:1]
+                        c[t] += 1
+                        if sorted(list(c)) != self.nums:
+                            return False
+            return True # }}}
+    """ 
+
     def check_correct_groups(self):
         g = [[],[],[], [],[],[], [],[],[]]
 
@@ -124,6 +150,12 @@ class Sudoku(Tk):
         return True
                 #if sorted(list(c)) == self.nums:
                     #return True
+
+
+    def end_scene(self):
+        for i in range(9):
+            for j in range(9):
+                self.squares[i][j]["state"] = "disabled"
 
 
 if __name__ == '__main__':

@@ -51,7 +51,7 @@ class Puzzle(Tk):
                 b.grid(row=y, column=x)
 
                 # when image is entered
-                if self.img !='': # {{{
+                if self.img: # {{{
 
                     # crop entered image
                     # by variables declared (50 line)
@@ -65,12 +65,16 @@ class Puzzle(Tk):
 
                 # what command is executed after click this element
                 b["command"] = lambda x=x,y=y: self.swap_puzzles([x,y])
-
-                # this is clicked element
+                
+                # any time ago button was disabled
+                b["state"] = "normal"
+                
+                # this is a clicked element
                 if self.moves % 2 and self.selected == [x,y]:
                     b["state"]="disabled"  # }}}
 
     def swap_puzzles(self, xy): #{{{
+        "method does swapping puzzles after click"
         # first clicked element
         x,y = xy
 
