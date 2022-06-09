@@ -5,6 +5,7 @@ import os
 from sys import argv
 
 class Puzzle(Tk):
+    "class needs two arguments"
     def __init__(self, img='', dimensions='2x2'):
         Tk.__init__(self)
         #print(argv)
