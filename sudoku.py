@@ -47,10 +47,11 @@ class Sudoku(Tk):
                         if t[:1] in self.nums:
                             obj.insert('1.0', t[:1])  #}}}
 
-            if to_win and self.check_correct_cols():
-                if self.check_correct_rows():
-                    print("brawo kurwa")
-                    self.end_scene()
+            #if to_win and self.check_correct_cols():
+             #   if self.check_correct_rows():
+              #      print("brawo kurwa")
+            if self.is_end():
+                self.end_scene()
             #self.check_correct_groups()
 
     def check_correct_rows(self): # {{{
@@ -112,7 +113,7 @@ class Sudoku(Tk):
             return True # }}}
     """ 
 
-    def check_correct_groups(self):
+    def check_correct_groups(self): # {{{
         g = [[],[],[], [],[],[], [],[],[]]
 
         for elem in self.squares[:3]:
@@ -147,10 +148,16 @@ class Sudoku(Tk):
                 if sorted(list(c)) != self.nums:
                     return False
             
-        return True
+        return True # }}}
                 #if sorted(list(c)) == self.nums:
                     #return True
 
+    def is_end(self):
+        if not self.check_correct_cols():
+            return False
+        if not self.check_correct_rows():
+            return False
+        return True
 
     def end_scene(self):
         for i in range(9):
