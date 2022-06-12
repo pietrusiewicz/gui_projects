@@ -9,32 +9,29 @@ class Puzzle(Tk):
     def __init__(self, img='', dimensions='2x2'):
         Tk.__init__(self)
         #print(argv)
-        self.img = argv[1] if len(argv) > 1 else ''
-        #print(self.img)
-        self.dimensions = list(map(int,dimensions.split('x')))
-        self.randomize_puzzles()
+        #self.dimensions = list(map(int,dimensions.split('x')))
+        #self.randomize_puzzles()
         self.moves = 1
         self.selected = []
-        self.show_puzzles()
+        #self.show_puzzles()
 
-    # prepare elements of puzzles
+    # prepare puzzles
     def randomize_puzzles(self):  # {{{
         # number of elements in row/column
         w,h = self.dimensions
 
         # create 2D array where [row[column]]
-        #self.correct_puzzles = [[(x,y) for x in range(w)] for y in range(h)]
         self.correct_puzzles = [[Button(self, text=f"{x},{y}") for x in range(w)] for y in range(h)]
 
-        # convert puzzles to 1D array
+        # convert puzzles to array
         self.puzzles = []
         for tup in self.correct_puzzles:
             self.puzzles += tup
 
-        # shuffle puzzles in 1D array
+        # shuffle puzzles in array
         shuffle(self.puzzles)
 
-        # convert 1D array to 2D array drawing [row[column]]
+        # convert array to 2D array drawing [row[column]]
         self.puzzles = [self.puzzles[y*w:(y+1)*w] for y in range(h)]
         # }}}
 
@@ -51,7 +48,7 @@ class Puzzle(Tk):
                 b = self.puzzles[y][x]
                 b.grid(row=y, column=x)
 
-                # when image is entered
+                # image is entered
                 if self.img: # {{{
 
                     # crop entered image
@@ -112,22 +109,7 @@ class Puzzle(Tk):
         b = Button(self, text="play again")
         b["command"] = lambda: [b.grid_forget(), b.forget(),self.randomize_puzzles(), self.show_puzzles()]
         b.grid(row=h, rowspan=h, columnspan=w) # }}}
-        """
-        print("kowno")
-        for y in range(h):
-            for x in range(w):
-                b = Button(self, text=f"{x},{y}")
-                if self.img != '':
-                    wycinek = self.get_crop(x, y)
-                    img = ImageTk.PhotoImage(wycinek)
-                    b.image=img
-                b.state="disabled"
-                b.grid(row=y, column=x)
-        #s = self.size()
-        b = Button(self, text="play again")
-        b["command"] = lambda: [b.grid_forget(), l.forget(),self.randomize_puzzles(), self.show_puzzles()]
-        b.grid(rowspan=h, columnspan=w) # }}}
-        """
+
     def get_crop(self,tx,ty):
         pic = Image.open(self.img)
         s = pic.size
@@ -137,4 +119,9 @@ class Puzzle(Tk):
 
 if __name__ == '__main__':
     p = Puzzle()
+    p.img = argv[1] if len(argv) > 1 else ''
+    dims = "10x10"
+    p.dimensions = list(map(int, dims.split('x')))
+    p.randomize_puzzles()
+    p.show_puzzles()
     p.mainloop()
