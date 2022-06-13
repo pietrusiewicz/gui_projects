@@ -8,12 +8,8 @@ class Puzzle(Tk):
     "class needs two arguments"
     def __init__(self, img='', dimensions='2x2'):
         Tk.__init__(self)
-        #print(argv)
-        #self.dimensions = list(map(int,dimensions.split('x')))
-        #self.randomize_puzzles()
         self.moves = 1
         self.selected = []
-        #self.show_puzzles()
 
     # prepare puzzles
     def randomize_puzzles(self):  # {{{
@@ -70,7 +66,8 @@ class Puzzle(Tk):
                 # this is a clicked element
                 if self.moves % 2 and self.selected == [x,y]:
                     b["state"]="disabled"  # }}}
-
+    
+    # swap elements
     def swap_puzzles(self, xy): #{{{
         "method does swapping puzzles after click"
         # first clicked element
@@ -103,19 +100,25 @@ class Puzzle(Tk):
         # incrementing number of moves
         self.moves += 1 # }}}
 
+    # scene of win
     def win_screen(self): # {{{
-        w,h = self.dimensions
+        w,h = self.dimension
+        
+        # place "koniec gry"
         Label(self, text="koniec gry").grid(row=h-1, rowspan=h, columnspan=w)
+
+        # button what play again
         b = Button(self, text="play again")
         b["command"] = lambda: [b.grid_forget(), b.forget(),self.randomize_puzzles(), self.show_puzzles()]
         b.grid(row=h, rowspan=h, columnspan=w) # }}}
 
-    def get_crop(self,tx,ty):
+    # get a crop of image
+    def get_crop(self,tx,ty): # {{{
         pic = Image.open(self.img)
         s = pic.size
         w,h = self.dimensions
         dx, dy = s[0]/w, s[1]/h
-        return pic.crop((tx*dx,ty*dy,(tx+1)*dx,(ty+1)*dy))
+        return pic.crop((tx*dx,ty*dy,(tx+1)*dx,(ty+1)*dy)) # }}}
 
 if __name__ == '__main__':
     p = Puzzle()
