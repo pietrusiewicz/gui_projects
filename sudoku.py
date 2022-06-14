@@ -190,7 +190,8 @@ class Sudoku(Tk):
                 # it doesn't disable this text object
                 self.squares[i][j]["state"] = "disabled"
 
-
+"""
 if __name__ == '__main__':
     s = Sudoku()
     s.mainloop()
+"""
