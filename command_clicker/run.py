@@ -2,14 +2,14 @@ from tkinter import Tk, Button
 import time
 from threading import Thread
 from sys import argv, exit
-from os import system
+from os import system,
 
 class Program(Tk):
     def __init__(self):
         Tk.__init__(self)
 
         # own command if given, default poweroffs
-        self.command = ''.join(argv[1:]) if len(argv) > 1 else "systemctl poweroff"
+        self.command = ''.join(argv[1:]) if len(argv) > 1 else ("systemctl poweroff" if os.name=='posix' else 'shutdown /s')
 
         self.dest_time = time.time()+200
         self.display_button()
