@@ -17,13 +17,16 @@ class Todolist:
         elif select == 3:
             n = int(input("number of item: "))
             key = list(self.items)[n]
+            self.items[key] = not bool(self.items[key])
+            """
             if self.items[key]:
                 self.items[key] = False
             else:
                 self.items[key] = True
+            """
         self.menu()
 
-    def add_item():
+    def add_item(self):
         return input("Name item: ")
 
 
