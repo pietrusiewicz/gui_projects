@@ -9,7 +9,8 @@ class Todolist:
             print(f"\t'{i}) {item}': {done}")
         select = int(input("1) Add Item 2) Delete Item 3) Mark Item *) Exit\n"))
         if select == 1:
-            self.items[self.add_item()] = False
+            self.add_item()
+
         elif select == 2:
             key = self.get_key()
             del self.items[key]
@@ -22,7 +23,7 @@ class Todolist:
         return list(self.items)[int(input("number of item: "))]
 
     def add_item(self):
-        return input("Name item: ")
+        self.items[input("Name item: ")] = False
 
 
 if __name__ == "__main__":
