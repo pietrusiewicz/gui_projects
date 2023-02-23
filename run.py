@@ -11,25 +11,11 @@ class Todolist:
         if select == 1:
             self.items[self.add_item()] = False
         elif select == 2:
-            """
-            n = int(input("number of item: "))
-            key = list(self.items)[n]
-            """
             key = self.get_key()
             del self.items[key]
         elif select == 3:
-            """
-            n = int(input("number of item: "))
-            key = list(self.items)[n]
-            """
             key = self.get_key()
             self.items[key] = not bool(self.items[key])
-            """
-            if self.items[key]:
-                self.items[key] = False
-            else:
-                self.items[key] = True
-            """
         self.menu()
 
     def get_key(self):
