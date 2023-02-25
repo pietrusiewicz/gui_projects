@@ -6,14 +6,14 @@ class Todolist(tk.Tk):
         self.items = {}
 
     def menu(self):
-        #print("Items:")
+        self.refresh()
         for i, items in enumerate(self.items.items()):
             item, done = items
             btn_color = "green" if done else "red"
 
             l_item = tk.Label(self, text=f"'{i}) {item}'")
             btn_mark = tk.Button(self, text=" ", bg=btn_color, command=lambda x=i : self.mark_item(x))
-            btn_delete = tk.Button(self, text="-")
+            btn_delete = tk.Button(self, text="-", command=lambda x=i: self.del_item(x))
 
             l_item.grid(row=i, column=0)
             btn_mark.grid(row=i, column=1)
@@ -25,19 +25,7 @@ class Todolist(tk.Tk):
         nrow = len(self.items)
         self.e.grid(row=nrow, column=0)
         btn_add.grid(row=nrow, column=1)
-        #select = int(input("1) Add Item 2) Delete Item 3) Mark Item *) Exit\n"))
-        """
-        if select == 1:
-            self.add_item()
-
-        elif select == 2:
-            key = self.get_key()
-            del self.items[key]
-
-        elif select == 3:
-            key = self.get_key()
-            self.items[key] = not bool(self.items[key])
-        """
+        print(self.items)
 
     def add_item(self):
         self.items[self.e.get()] = False
@@ -46,6 +34,7 @@ class Todolist(tk.Tk):
     def del_item(self, n):
         key = self.get_key(n)
         del self.items[key]
+        self.menu()
 
     def mark_item(self, n):
         key = self.get_key(n)
@@ -56,7 +45,21 @@ class Todolist(tk.Tk):
     def get_key(self, n):
         return list(self.items)[n]
 
+    def refresh(self):
+        cols,rows = self.size()
 
+        for widget in self.winfo_children():
+            widget.destroy()
+            """
+        elems = [[tk.Label(self) for j in range(cols)] for i in range(rows)]
+        for i,elem in enumerate(elems):
+            for j,el in enumerate(elem):
+                el.grid(row=i, column=j)
+        for elem in enumerate(elems):
+            for el in enumerate(elem):
+                el.grid_forget()
+            """
+        print(cols,rows)
 
 
 if __name__ == "__main__":
