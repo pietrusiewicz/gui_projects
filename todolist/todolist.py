@@ -13,7 +13,7 @@ class Todolist:
 
         elif select == 2:
             key = self.get_key(int(input("number of item: ")))
-            del self.items[key]
+            self.del_item(key)
 
         elif select == 3:
             key = self.get_key(int(input("number of item: ")))
@@ -27,8 +27,16 @@ class Todolist:
     def add_item(self, key):
         self.items[key] = False
 
+    def del_item(self, index):
+        key = self.get_key(index)
+        del self.items[key]
+
+    def mark_item(self, index):
+        key = self.get_key(index)
+        self.items[key] = not bool(self.items[key])
+
 
 if __name__ == "__main__":
     t = Todolist()
     t.menu()
-    
+
