@@ -11,6 +11,7 @@ class AppGui(tk.Tk, Todolist):
     def menu(self):
         self.refresh()
         btn_add = tk.Button(self, text="+") 
+        btn_add["command"]=lambda: self.wrapper(self.add_item, self.e.get())
         for i, items in enumerate(self.items.items()):
             item, done = items
             btn_color = "green" if done else "red"
@@ -31,7 +32,6 @@ class AppGui(tk.Tk, Todolist):
             """
 
         self.e = tk.Entry()
-        btn_add["command"] =lambda: self.wrapper(self.add_item, self.e.get())
 
         nrow = len(self.items)
         self.e.grid(row=nrow, column=0)
