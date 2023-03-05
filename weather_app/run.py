@@ -14,7 +14,7 @@ class Weather:
         for station in self.get_current_weather():
             try:
                 x1,y1 = self.get_coords_weather_city(station)
-            except:
+            except TypeError:
                 continue
             x2,y2 = float(city['lon']), float(city['lat'])
             distance = self.length_of_track_two_points(x1,x2, y1,y2)
