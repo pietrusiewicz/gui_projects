@@ -6,12 +6,13 @@ import math
 class Weather:
     def __init__(self):
         self.cities = json.load(open("miasta_pl.json"))
+        self.jsonfile_weather = json.loads(self.get_current_weather())
 
 
     def get_nearest_weather(self, city_name, key=''):
         lengths = []
         city = [_ for _ in self.cities if city_name == _['city']][0]
-        for station in self.get_current_weather():
+        for station in self.jsonfile_weather:
             try:
                 x1,y1 = self.get_coords_weather_city(station)
             except TypeError:
@@ -25,9 +26,7 @@ class Weather:
 
 
     def get_current_weather(self):
-        jsonfile = json.loads(r.get("https://danepubliczne.imgw.pl/api/data/synop").content)
-        return jsonfile
-
+        return r.get("https://danepubliczne.imgw.pl/api/data/synop").content
 
     def get_coords_weather_city(self, station):
         for line in self.cities:
