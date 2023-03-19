@@ -26,7 +26,7 @@ class Weather_map(tk.Tk):
 
     def display_button(self, city, wthr):
         tempra = float(wthr["temperatura"])
-        x,y = float(city['lon']), 60-float(city['lat'])
+        x,y  = float(city['lon']), 60-float(city['lat'])
         btn = tk.Button(self)
         btn["bg"] = self.give_color(tempra)
         btn["text"] = wthr["temperatura"]
@@ -36,6 +36,17 @@ class Weather_map(tk.Tk):
 
     def display_map(self):
         w = weather_data.Weather()
+        for i, station in enumerate(list(w.stations_and_cities)):
+            weather = w.get_nearest_weather(station)
+            for city in w.stations_and_cities[station]:
+                lon,lat = ([(_['lon'], _['lat']) for _ in w.cities if _['city']==city][0])
+                city_obj = {"city": city, 'lon':lon, 'lat':lat}
+                self.display_button(city_obj, weather)
+            print(f"Loading {int((i/len(w.stations_and_cities))*100)}%", end="\r")
+        print("Loaded 100%", end="\r")
+
+        """
+        w = weather_data.Weather()
         for i,city in enumerate(w.cities):
             weather = w.get_nearest_weather(city['city'])
             print(f"Loading {int((i/len(w.cities))*100)}%", end="\r")
@@ -44,11 +55,12 @@ class Weather_map(tk.Tk):
             #self.display_voivodeships(city, weather)
         
         print("Loaded 100%", end="\r")
+        """
     
 
     def display_map_stations(self):
         w = weather_data.Weather()
-        for i, station in enumerate(w.jsonfile_weather):
+        for i, station in enumerate(w.stations):
             xy = w.get_coords_city(station['stacja'])
             if xy==None:
                 continue
@@ -86,5 +98,6 @@ class Weather_map(tk.Tk):
 
 if __name__ == '__main__':
     w = Weather_map()
-    w.display_map_stations()
+    #w.display_map_stations()
+    w.display_map()
     w.mainloop()

@@ -7,7 +7,8 @@ import statistics
 class Weather:
     def __init__(self):
         self.cities = json.load(open("miasta_pl.json"))
-        self.jsonfile_weather = json.loads(self.get_current_weather())
+        self.stations = json.loads(self.get_current_weather())
+        self.stations_and_cities = json.load(open("cities_and_stations.json"))
 
 
     def get_nearest_weather(self, city_name, key=''):
@@ -16,7 +17,7 @@ class Weather:
             city = [_ for _ in self.cities if city_name == _['city']][0]
         except:
             print(city_name)
-        for station in self.jsonfile_weather:
+        for station in self.stations:
             try:
                 x1,y1 = self.get_coords_city(station["stacja"])
             except TypeError:
@@ -44,7 +45,22 @@ class Weather:
     def length_of_track_two_points(self, xa,xb, ya,yb):
         return math.sqrt( (xb-xa)**2 + (yb-ya)**2 )
 
+    # saves the nearest station for city
+    def prepare_json_cities_and_stations(self):
+        new_dict = {}
+        for city in self.cities:
+            city_name = city['city']
+            station = self.get_nearest_weather(city_name, 'stacja')
+            if station in list(new_dict):
+                new_dict[station].append(city_name)
+            else:
+                new_dict[station]=[city_name]
+
+        return new_dict
+
 if __name__ == "__main__":
     w = Weather()
-    miejscowosc = input("Podaj miejscowość, a podam ci:\n\ttemperature,\n\tprędkość wiatru,\n\tkierunek wiatru,\n\twilgotność względną,\n\tsumę opadu,\n\tciśnienie\n")
-    print(w.get_nearest_weather(miejscowosc))
+    #dict_cities = w.prepare_json_cities_and_stations()
+    #json.dump(dict_cities, open('cities_and_stations.json','w'))
+    #miejscowosc = input("Podaj miejscowość, a podam ci:\n\ttemperature,\n\tprędkość wiatru,\n\tkierunek wiatru,\n\twilgotność względną,\n\tsumę opadu,\n\tciśnienie\n")
+    #print(w.get_nearest_weather(miejscowosc))
