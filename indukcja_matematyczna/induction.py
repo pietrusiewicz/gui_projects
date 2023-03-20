@@ -1,3 +1,4 @@
+from sys import argv
 class Induction:
     def __init__(self, a,b,n):
         self.a = a
@@ -32,6 +33,7 @@ class Induction:
         print(f"y'=y+({y1})")
 
 if __name__ == '__main__':
-    i = Induction(17, 11, 160)
+    a,b, n=argv[1:]
+    i = Induction(int(a),int(b), int(n))
     i.krok_bazowy()
     i.krok_indukcyjny()
