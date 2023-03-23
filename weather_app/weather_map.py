@@ -34,6 +34,14 @@ class Weather_map(tk.Tk):
         btn.place(x=x*100-1250, y=y*120-620)
 
 
+    def display_cities_nearby_station(self, station):
+        w = weather_data.Weather()
+        for city in w.stations_and_cities[station]:
+            lon,lat = ([(_['lon'], _['lat']) for _ in w.cities if _['city']==city][0])
+            city_obj = {"city": city, 'lon':lon, 'lat':lat}
+            self.display_button(city_obj, weather)
+        
+
     def display_map(self):
         w = weather_data.Weather()
         for i, station in enumerate(list(w.stations_and_cities)):
@@ -98,6 +106,6 @@ class Weather_map(tk.Tk):
 
 if __name__ == '__main__':
     w = Weather_map()
-    #w.display_map_stations()
-    w.display_map()
+    w.display_map_stations()
+    #w.display_map()
     w.mainloop()
