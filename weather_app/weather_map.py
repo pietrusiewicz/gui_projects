@@ -30,12 +30,13 @@ class Weather_map(tk.Tk):
         btn = tk.Button(self)
         btn["bg"] = self.give_color(tempra)
         btn["text"] = wthr["temperatura"]
-        btn["command"] = lambda x=city["city"]: print(x)
+        btn["command"] = lambda x=city["city"]: self.display_cities_nearby_station(x)
         btn.place(x=x*100-1250, y=y*120-620)
 
 
     def display_cities_nearby_station(self, station):
         w = weather_data.Weather()
+        weather = w.get_nearest_weather(station)
         for city in w.stations_and_cities[station]:
             lon,lat = ([(_['lon'], _['lat']) for _ in w.cities if _['city']==city][0])
             city_obj = {"city": city, 'lon':lon, 'lat':lat}
