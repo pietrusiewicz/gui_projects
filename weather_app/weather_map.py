@@ -7,26 +7,12 @@ import weather_data
 class Weather_map(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
+        self.geometry("1280x720")
 
-
-    """
-    def display_voivodeships(self, city, wthr):
-        names = ["Łobez", "Kościerzyna", "Biskupiec", "Białystok", "Świebodzin", "Września", "Warszawa", "Lublin", "Toruń", "Legnica", "Opole", "Katowice", "Wieliczka", "Kielce", "Rzeszów"]
-        for name in names:
-            if name == city['city']:
-                tempra = float(wthr["temperatura"])
-                x,y = float(city['lon']), 60-float(city['lat'])
-                btn = tk.Button(self, height=8, width=10)
-                btn["bg"] = self.give_color(tempra)
-                btn["text"] = wthr["temperatura"]
-                btn["command"] = lambda x=city["city"]: print(x)
-                btn.place(x=x*100-1250, y=y*120-675)
-    """
-        
 
     def display_button(self, city, wthr):
         tempra = float(wthr["temperatura"])
-        x,y  = float(city['lon']), 60-float(city['lat'])
+        x,y  = float(city['lon']),60-float(city['lat'])
         btn = tk.Button(self)
         btn["bg"] = self.give_color(tempra)
         btn["text"] = wthr["temperatura"]
@@ -53,18 +39,6 @@ class Weather_map(tk.Tk):
                 self.display_button(city_obj, weather)
             print(f"Loading {int((i/len(w.stations_and_cities))*100)}%", end="\r")
         print("Loaded 100%", end="\r")
-
-        """
-        w = weather_data.Weather()
-        for i,city in enumerate(w.cities):
-            weather = w.get_nearest_weather(city['city'])
-            print(f"Loading {int((i/len(w.cities))*100)}%", end="\r")
-            #print(weather)
-            self.display_button(city, weather)
-            #self.display_voivodeships(city, weather)
-        
-        print("Loaded 100%", end="\r")
-        """
     
 
     def display_map_stations(self):
