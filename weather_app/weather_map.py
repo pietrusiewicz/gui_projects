@@ -6,53 +6,49 @@ import weather_data
 
 class Weather_map(tk.Tk):
     def __init__(self):
+        self.w = weather_data.Weather()
         tk.Tk.__init__(self)
         self.geometry("1280x720")
 
 
-    def display_button(self, city, wthr):
+    def display_button(self, city: str, wthr):
+        #w = weather_data.Weather()
+        lon,lat = [(_['lon'], _['lat']) for _ in self.w.cities if _['city']==city][0]
+        city_obj = {"city": city, 'lon':lon, 'lat':lat}
+
         tempra = float(wthr["temperatura"])
-        x,y  = float(city['lon']),60-float(city['lat'])
+        x,y  = float(city_obj['lon']),60-float(city_obj['lat'])
         btn = tk.Button(self)
         btn["bg"] = self.give_color(tempra)
         btn["text"] = wthr["temperatura"]
-        btn["command"] = lambda x=city["city"]: self.display_cities_nearby_station(x)
+        btn["command"] = lambda x=city_obj["city"]: self.display_cities_nearby_station(x)
         btn.place(x=x*100-1250, y=y*120-620)
 
 
     def display_cities_nearby_station(self, station):
-        w = weather_data.Weather()
-        weather = w.get_nearest_weather(station)
-        for city in w.stations_and_cities[station]:
-            lon,lat = ([(_['lon'], _['lat']) for _ in w.cities if _['city']==city][0])
-            city_obj = {"city": city, 'lon':lon, 'lat':lat}
-            self.display_button(city_obj, weather)
+        try:
+            weather = self.w.get_nearest_weather(station)
+            for city in self.w.stations_and_cities[station]:
+                self.display_button(city, weather)
+        except:
+            print(station)
         
 
     def display_map(self):
-        w = weather_data.Weather()
-        for i, station in enumerate(list(w.stations_and_cities)):
-            weather = w.get_nearest_weather(station)
-            for city in w.stations_and_cities[station]:
-                lon,lat = ([(_['lon'], _['lat']) for _ in w.cities if _['city']==city][0])
-                city_obj = {"city": city, 'lon':lon, 'lat':lat}
-                self.display_button(city_obj, weather)
+        for i, station in enumerate(list(self.w.stations_and_cities)):
+            weather = self.w.get_nearest_weather(station)
+            for city in self.w.stations_and_cities[station]:
+                self.display_button(city, weather)
             print(f"Loading {int((i/len(w.stations_and_cities))*100)}%", end="\r")
         print("Loaded 100%", end="\r")
     
 
     def display_map_stations(self):
-        w = weather_data.Weather()
-        for i, station in enumerate(w.stations):
-            xy = w.get_coords_city(station['stacja'])
-            if xy==None:
+        for i, station in enumerate(self.w.stations):
+            print(f"Loading {i//len(self.w.stations)*100}%", end="\r")
+            if self.w.get_coords_city(station['stacja'])==None:
                 continue
-            x,y = xy
-            city = {"city":station['stacja'] , "lon":x, "lat":y}
-            print(f"Loading {int((i/len(w.cities))*100)}%", end="\r")
-            #print(weather)
-            self.display_button(city, station)
-            #self.display_voivodeships(city, weather)
+            self.display_button(station['stacja'], station)
         
         print("Loaded 100%")
 
