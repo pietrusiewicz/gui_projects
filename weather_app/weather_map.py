@@ -1,7 +1,10 @@
 import tkinter as tk
 import json
 import math
-import weather_data
+try:
+    import weather_data
+except ModuleNotFoundError:
+    from . import weather_data
 
 
 class Weather_map(tk.Tk):
