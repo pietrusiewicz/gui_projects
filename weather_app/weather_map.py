@@ -7,11 +7,15 @@ except ModuleNotFoundError:
     from . import weather_data
 
 
-class Weather_map(tk.Tk):
-    def __init__(self):
+#class Weather_map(tk.Tk):
+class Weather_map:
+
+    #def __init__(self):
+    def __init__(self, master):
+        # m like master for short
+        self.m = master
         self.w = weather_data.Weather()
-        tk.Tk.__init__(self)
-        self.geometry("1280x720")
+        #tk.Tk.__init__(self)
 
 
     def display_button(self, city: str, wthr):
@@ -21,7 +25,9 @@ class Weather_map(tk.Tk):
 
         tempra = float(wthr["temperatura"])
         x,y  = float(city_obj['lon']),60-float(city_obj['lat'])
-        btn = tk.Button(self)
+
+        # display button
+        btn = tk.Button(self.m)
         btn["bg"] = self.give_color(tempra)
         btn["text"] = wthr["temperatura"]
         btn["command"] = lambda x=city_obj["city"]: self.display_cities_nearby_station(x)
@@ -79,7 +85,9 @@ class Weather_map(tk.Tk):
 
 
 if __name__ == '__main__':
-    w = Weather_map()
+    r = tk.Tk()
+    r.geometry("1280x720")
+    w = Weather_map(r)
     w.display_map_stations()
     #w.display_map()
-    w.mainloop()
+    r.mainloop()

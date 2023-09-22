@@ -1,12 +1,15 @@
 import tkinter as tk
-from weather_app import weather_map
+from weather_app.weather_map import Weather_map
 import os
 
 
 class App(tk.Tk):
     def __init__(self):
         tk.Tk.__init__(self)
-        self.func_dict = {'weather_map': lambda: [w := weather_map.Weather_map(), w.display_map_stations(), w.mainloop()]}
+        self.geometry("1280x720")
+        #self.func_dict = {'weather_map': lambda: [w := weather_map.Weather_map(), w.display_map_stations(), w.mainloop()]}
+        print(self.__dir__())
+        self.func_dict = {'weather_map': lambda: [w := Weather_map(self.master), w.display_map_stations()]}
 
     def display_buttons(self):
         key = 'weather_map'
