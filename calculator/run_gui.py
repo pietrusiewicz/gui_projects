@@ -28,13 +28,13 @@ class Calculator(tk.Tk):
         else:
             self.e.delete(0, len(t))
             [self.e.insert(0, let) for let in t[::-1]]
-        expression = self.e.get()
-        print(repr(expression))
-        print(type(expression[-1]) == int)
-        #print(type(1)==int)
-        if expression[-1] not in ['+', '-', '*', '/', '']:
-            result = eval(f'{expression}')
-            tk.Label(self, text=f"= {result}").grid(row=0, column=0, columnspan=4, sticky='E')
+            expression = self.e.get()
+            print(repr(expression))
+            print(type(expression[-1]) == int)
+            #print(type(1)==int)
+            if expression[-1] not in ['+', '-', '*', '/', '']:
+                result = eval(f'{expression}')
+                tk.Label(self, text=f"= {result}").grid(row=0, column=0, columnspan=4, sticky='E')
 
     def del_e(self):
         t = self.e.get()
