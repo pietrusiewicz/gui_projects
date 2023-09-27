@@ -1,4 +1,5 @@
-<h2>what project could you recommend to make after know fundamentals?</h2>
+Main application make possible using simple apps in one window
+<!--<h2>what project could you recommend to make after know fundamentals?</h2>
 
 As a language model, I don't have personal experiences or opinions, but here are some projects that can help you reinforce your programming skills and knowledge of the fundamentals:
 
@@ -16,3 +17,4 @@ As a language model, I don't have personal experiences or opinions, but here are
 </ol>
 These projects are great ways to reinforce your programming skills and get hands-on experience with various concepts. Feel free to make changes and customize the projects to fit your interests.
 
+-->
