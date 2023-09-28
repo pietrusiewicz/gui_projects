@@ -1,11 +1,16 @@
 import tkinter as tk
-from todolist import Todolist
+
+try:
+    from todolist import Todolist
+except ImportError:
+    from .todolist import Todolist 
 
 
-class AppGui(Todolist):
+class TodoListGui(Todolist):
     def __init__(self, master):
-        Todolist.__init__(self)
         self.m = master
+        print(type(self.m))
+        Todolist.__init__(self)
         #tk.Tk.__init__(self)
         #self.items = Todolist().items 
 
@@ -44,16 +49,18 @@ class AppGui(Todolist):
         self.menu()
 
     def refresh(self):
-        cols,rows = self.m.size()
-
-        for widget in self.m.winfo_children():
-            widget.destroy()
-        print(cols,rows)
+        print(type(self.m))
+        try:
+            widgets = self.m.winfo_children()
+            for widget in widgets:
+                widget.destroy()
+        except:
+            pass
 
 
 if __name__ == "__main__":
     r = tk.Tk()
-    t = AppGui(r)
+    t = TodoListGui(r)
     t.menu()
     r.mainloop()
     

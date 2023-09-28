@@ -10,10 +10,10 @@ except ModuleNotFoundError:
 #class Weather_map(tk.Tk):
 class Weather_map:
 
-    #def __init__(self):
     def __init__(self, master):
         # m like master for short
         self.m = master
+        print(type(self.m))
         self.w = weather_data.Weather()
         #tk.Tk.__init__(self)
 

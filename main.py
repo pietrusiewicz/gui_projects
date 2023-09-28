@@ -1,6 +1,7 @@
 import tkinter as tk
 from modules.weather_app.weather_map import Weather_map
 from modules.calculator.run_gui import Calculator
+from modules.todolist.run_gui import TodoListGui
 #import modules.weather_app.weather_map.Weather_map as Weather_map
 import os
 
@@ -14,7 +15,9 @@ class App(tk.Tk):
         self.func_dict = {'weather_map': lambda: [self.refresh(), w := Weather_map(self.master),
                                                   w.display_map_stations()],
                           'calculator': lambda: [self.refresh(), c := Calculator(self.master),
-                                                 c.menu()]}
+                                                 c.menu()],
+                          'todolist': lambda: [self.refresh(), t := TodoListGui(self),
+                                               t.menu()]}
 
     def display_buttons(self):
         for i,key in enumerate(self.func_dict):
