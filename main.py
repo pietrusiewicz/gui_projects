@@ -12,9 +12,9 @@ class App(tk.Tk):
         self.geometry("1280x720")
         #self.func_dict = {'weather_map': lambda: [w := weather_map.Weather_map(), w.display_map_stations(), w.mainloop()]}
         print(self.__dir__())
-        self.func_dict = {'weather_map': lambda: [self.refresh(), w := Weather_map(self.master),
+        self.func_dict = {'weather_map': lambda: [self.refresh(), w := Weather_map(self),
                                                   w.display_map_stations()],
-                          'calculator': lambda: [self.refresh(), c := Calculator(self.master),
+                          'calculator': lambda: [self.refresh(), c := Calculator(self),
                                                  c.menu()],
                           'todolist': lambda: [self.refresh(), t := TodoListGui(self),
                                                t.menu()]}
