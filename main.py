@@ -43,5 +43,6 @@ class App(tk.Tk):
 
 if __name__ == '__main__':
     a = App()
+    a.bind("<Escape>", lambda event: [a.refresh(),a.display_buttons()])
     a.display_buttons()
     a.mainloop()
