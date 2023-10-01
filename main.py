@@ -12,16 +12,16 @@ class App(tk.Tk):
         self.geometry("1280x720")
         #self.func_dict = {'weather_map': lambda: [w := weather_map.Weather_map(), w.display_map_stations(), w.mainloop()]}
         print(self.__dir__())
-        self.func_dict = {'weather_map': lambda: [self.refresh(), w := Weather_map(self),
+        self.func_dict = {'weather_map': lambda: [w := Weather_map(self),
                                                   w.display_map_stations()],
-                          'calculator': lambda: [self.refresh(), c := Calculator(self),
+                          'calculator': lambda: [c := Calculator(self),
                                                  c.menu()],
-                          'todolist': lambda: [self.refresh(), t := TodoListGui(self),
+                          'todolist': lambda: [t := TodoListGui(self),
                                                t.menu()]}
 
     def display_buttons(self):
         for i,key in enumerate(self.func_dict):
-            func = self.func_dict[key]
+            func = lambda x=key: [self.refresh(), self.func_dict[x]()]
             btn = tk.Button(self, text=key, command=func)
             btn.grid(row=0, column=i)
 
