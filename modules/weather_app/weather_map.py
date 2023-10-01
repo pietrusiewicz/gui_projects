@@ -41,7 +41,7 @@ class Weather_map:
                 self.display_button(city, weather)
         except:
             print(station)
-        
+
 
     def display_map(self):
         for i, station in enumerate(list(self.w.stations_and_cities)):

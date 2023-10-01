@@ -8,9 +8,9 @@ import os
 class Weather:
     def __init__(self):
         print()
-        self.cities = json.load(open(os.getcwd()+"\weather_app\miasta_pl.json"))
+        self.cities = json.load(open(os.getcwd()+"\modules\weather_app\miasta_pl.json"))
         self.stations = json.loads(self.get_current_weather())
-        self.stations_and_cities = json.load(open(os.getcwd()+"\weather_app\cities_and_stations.json"))
+        self.stations_and_cities = json.load(open(os.getcwd()+"\modules\weather_app\cities_and_stations.json"))
 
 
     def get_nearest_weather(self, city_name, key=''):
