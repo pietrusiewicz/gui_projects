@@ -27,7 +27,8 @@ class App(tk.Tk):
 
     def refresh(self):
         cols,rows = self.size()
-
+        
+        # delete tkinter classes in Tk()
         for widget in self.winfo_children():
             widget.destroy()
         print(cols,rows)
