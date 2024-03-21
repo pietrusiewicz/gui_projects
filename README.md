@@ -1,6 +1,7 @@
 Main application make possible using simple apps in one window
 <ol>
   <li>Poland's Weather map</li>
+  <img src='demo.png' alt='weather app'/>
   <li>todolist</li>
   <li>calculator</li>
 </ol>
