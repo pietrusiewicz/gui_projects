@@ -1,4 +1,9 @@
 Main application make possible using simple apps in one window
+<ol>
+  <li>Poland's Weather map</li>
+  <li>todolist</li>
+  <li>calculator</li>
+</ol>
 <!--<h2>what project could you recommend to make after know fundamentals?</h2>
 
 As a language model, I don't have personal experiences or opinions, but here are some projects that can help you reinforce your programming skills and knowledge of the fundamentals:
